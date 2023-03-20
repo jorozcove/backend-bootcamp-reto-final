@@ -1,32 +1,32 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import TypeDocument from 'App/Models/TypeDocument';
+import TypesDocument from 'App/Models/TypesDocument';
 
 export default class TypesDocumentsController {
-    public createTypeDocument({request, response}: HttpContextContract){
+    public createTypesDocument({request, response}: HttpContextContract){
         try{
             const {name} = request.all();
-            const typeDocument = new TypeDocument();
-            typeDocument.name = name;
-            typeDocument.state = true;
-            typeDocument.save();
+            const TypesDocumentModel = new TypesDocument();
+            TypesDocumentModel.name = name;
+            TypesDocumentModel.state = true;
+            TypesDocumentModel.save();
 
             return response.status(200).json({
                 "state": true,
-                "message": "typeDocument creado exitosamente"
+                "message": "TypesDocument creado exitosamente"
             })
 
         }catch(e){
             console.log(`e -> ${e}`)
             return response.status(500).json({
                 "state": false,
-                "message": "Error al crear el typeDocument"
+                "message": "Error al crear el TypesDocument"
             })
         }
     }
 
     public async getTypesDocuments({response}: HttpContextContract){
         try{
-            const typesDocuments = await TypeDocument.query().select('id','name').where({})
+            const typesDocuments = await TypesDocument.query().select('id','name').where({})
             return response.status(200).json({
                 state: true,
                 typesDocuments,
@@ -40,35 +40,35 @@ export default class TypesDocumentsController {
         }
     }
 
-    public async updateTypeDocument({request, response}: HttpContextContract){
+    public async updateTypesDocument({request, response}: HttpContextContract){
         try {
-            const id = request.param('id_typeDocument')
+            const id = request.param('id_TypesDocument')
             const data = request.all()
-            await TypeDocument.query().where('id', id).update(data)
+            await TypesDocument.query().where('id', id).update(data)
             return response.status(200).json({
                 state: true,
-                message: "typeDocument editado con exito"
+                message: "TypesDocument editado con exito"
             })
         } catch (error) {
             return response.status(500).json({
                 state: false,
-                message: "Error al actualizar typeDocument"
+                message: "Error al actualizar TypesDocument"
             })
         }
     }
 
-    public async deleteTypeDocument({request, response}: HttpContextContract){
+    public async deleteTypesDocument({request, response}: HttpContextContract){
         try {
-            const id = request.param('id_typeDocument')
-            await TypeDocument.query().where('id', id).delete()
+            const id = request.param('id_TypesDocument')
+            await TypesDocument.query().where('id', id).delete()
             return response.status(200).json({
                 state: true,
-                message: "typeDocument eliminado con exito"
+                message: "TypesDocument eliminado con exito"
             })
         } catch (error) {
             return response.status(500).json({
                 state: false,
-                message: "Error al eliminar typeDocument"
+                message: "Error al eliminar TypesDocument"
             })
         }
     }

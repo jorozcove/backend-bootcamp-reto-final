@@ -20,7 +20,7 @@ export default class Users extends BaseSchema {
       table.boolean('state').notNullable()
 
       table.foreign('type_document').references('id').inTable('types_documents').onDelete('cascade')
-      table.foreign('rol_id').references('id').inTable('role').onDelete('cascade')
+      table.foreign('rol_id').references('id').inTable('roles').onDelete('cascade')
 
       table.timestamps(true)
     })

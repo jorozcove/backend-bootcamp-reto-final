@@ -8,14 +8,14 @@ const bcryptjs = require('bcryptjs')
 export default class UsersController {
     public async register({request, response}: HttpContextContract){
       try{
-        const {firstName , secondName, surname, secondSurName, typeDocument, documentNumber, email, password, rol, phone} = request.all();
+        const {firstName , secondName, surname, secondSurName, TypesDocument, documentNumber, email, password, rol, phone} = request.all();
 
         const user = new User();
         user.first_name = firstName;
         user.second_name = secondName;
         user.surname = surname;
         user.second_sur_name = secondSurName;
-        user.type_document = typeDocument;
+        user.type_document = TypesDocument;
         user.document_number = documentNumber;
         user.email = email;
         user.rol_id = rol;
@@ -47,7 +47,7 @@ export default class UsersController {
     //     "secondName": "Perez",
     //     "surname": "Perez",
     //     "secondSurName": "Perez",
-    //     "typeDocument": "CC",
+    //     "TypesDocument": "CC",
     //     "documentNumber": "123456789",
     //     "email": "juanPerez@gmail.com",
     //     "password": "1234",
@@ -123,12 +123,24 @@ export default class UsersController {
       public async getUser({request, response}: HttpContextContract){
         try {
           const id = request.param('id_user')
+
           const user = await User.query().select('first_name','second_name','surname','second_sur_name','type_document','document_number','email','phone').where('id', id)
-          return response.status(200).json({
-            state: true,
-            user,
-            message: "Estudiante encontrado"
+
+          console.log(user)
+
+          if (user.length > 0){
+            return response.status(200).json({
+              state: true,
+              user: user[0],
+              message: "Estudiante encontrado"
+            })
+          }
+
+          return response.status(404).json({
+            state: false,
+            message: "Estudiante no encontrado"
           })
+
         } catch (error) {
           return response.status(500).json({
             state: false,

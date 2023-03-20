@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import TypesDocuments from './TypeDocument'
+import TypesDocuments from './TypesDocument'
 import role from './Role'
 
 export default class User extends BaseModel {

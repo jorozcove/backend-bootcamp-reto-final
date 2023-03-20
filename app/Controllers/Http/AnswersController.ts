@@ -37,7 +37,7 @@ export default class AnswersController {
         }
     }
 
-    public async updatAnswerById({request, response}: HttpContextContract){
+    public async updateAnswerById({request, response}: HttpContextContract){
         try {
             const id = request.param('id_answer')
             const {option, iscorrect} = request.all()

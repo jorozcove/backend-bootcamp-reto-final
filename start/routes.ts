@@ -22,11 +22,11 @@ Route.group(() => {
 
   //Doc Type routes
   Route.group(() =>{
-    Route.post('/create', 'TypesDocumentsController.createTypeDocument');
+    Route.post('/create', 'TypesDocumentsController.createTypesDocument');
     Route.get('/getTypesDocuments', 'TypesDocumentsController.getTypesDocuments')
-    Route.delete('/deleteTypeDocument/:id_typeDocument', 'TypesDocumentsController.deleteTypeDocument')
-    Route.put('/updateTypeDocument/:id_typeDocument', 'TypesDocumentsController.updateTypeDocument')
-  }).prefix('typeDocument').middleware(['auth', 'admin'])
+    Route.delete('/deleteTypesDocument/:id_TypesDocument', 'TypesDocumentsController.deleteTypesDocument')
+    Route.put('/updateTypesDocument/:id_TypesDocument', 'TypesDocumentsController.updateTypesDocument')
+  }).prefix('TypesDocument').middleware(['auth', 'admin'])
 
   //Question routes
   Route.group(() =>{
