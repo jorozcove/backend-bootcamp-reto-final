@@ -1,0 +1,48 @@
+definitions:
+  Answer:
+    type: object
+    properties:
+      id:
+        type: integer
+      option:
+        type: string
+      is_correct:
+        type: boolean
+      question_id:
+        type: integer
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    Answer:
+      type: object
+      properties:
+        option:
+          type: string
+          description: Opción de respuesta
+        is_correct:
+          type: boolean
+          description: Indica si la respuesta es correcta
+        question_id:
+          type: integer
+          description: ID de la pregunta
+        state:
+          type: boolean
+          description: Estado de la respuesta
+      required:
+        - option
+        - is_correct
+        - question_id
+        - state
+      example:
+        option: "string"
+        is_correct: true
+        question_id: 1
+        state: true

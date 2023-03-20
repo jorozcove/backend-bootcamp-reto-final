@@ -1,0 +1,366 @@
+/api/v1/user/create:
+  post:
+    tags:
+      - Users
+    description: Crear usuario
+    produces:
+      - application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                description: Nombre del usuario
+              secondName:
+                type: string
+                description: Segundo nombre del usuario
+              surname:
+                type: string
+                description: Apellido del usuario
+              secondSurName:
+                type: string
+                description: Segundo apellido del usuario
+              TypesDocument:
+                type: integer
+                description: Tipo de documento del usuario
+              documentNumber:
+                type: string
+                description: Número de documento del usuario
+              email:
+                type: string
+                description: Correo electrónico del usuario
+              password:
+                type: string
+                description: Contraseña del usuario
+              rol:
+                type: integer
+                description: Rol del usuario
+              phone:
+                type: string
+                description: Teléfono del usuario
+          example:
+            {
+              "firstName": "string",
+              "secondName": "string",
+              "surname": "string",
+              "secondSurName": "string",
+              "TypesDocument": "number",
+              "documentNumber": "string",
+              "email": "string",
+              "password": "string",
+              "rol": "number",
+              "phone": "string"
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": true,
+                "message": "Estudiante creado exitosamente"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Fallo en la creación del estudiante"
+              }
+
+/api/v1/login:
+  post:
+    tags:
+      - Users
+    description: Iniciar sesión
+    produces:
+      - application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Correo electrónico del usuario
+              password:
+                type: string
+                description: Contraseña del usuario
+          example:
+            {
+              "email": "string",
+              "password": "string"
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "token": "string",
+                "state": true,
+                "id": "number",
+                "name": "string",
+                "role": "string",
+                "msg": "Ingreso exitoso"
+              }
+      400:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "msg": "Error en el servidor"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "msg": "Error en el servidor"
+              }
+
+/api/v1/user/getUsers:
+  get:
+    tags:
+      - Users
+    security:
+      - bearerAuth: []
+    description: Listado de usuarios
+    produces:
+      - application/json
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": true,
+                "users": [
+                  {
+                    "first_name": "string",
+                    "second_name": "string",
+                    "surname": "string",
+                    "second_sur_name": "string",
+                    "type_document": "number",
+                    "document_number": "string",
+                    "email": "string",
+                    "phone": "string"
+                  }
+                ],
+                "message": "Listado de estudiantes"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Fallo en el listado de estudiantes"
+              }
+
+/api/v1/user/getUser/{id_user}:
+  get:
+    tags:
+      - Users
+    security:
+      - bearerAuth: []
+    description: Obtener usuario
+    produces:
+      - application/json
+    parameters:
+      - name: id_user
+        in: path
+        description: ID del usuario
+        required: true
+        type: integer
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": true,
+                "user": [
+                  {
+                    "first_name": "string",
+                    "second_name": "string",
+                    "surname": "string",
+                    "second_sur_name": "string",
+                    "type_document": "number",
+                    "document_number": "string",
+                    "email": "string",
+                    "phone": "string"
+                  }
+                ],
+                "message": "Estudiante encontrado"
+              }
+      404:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Estudiante no encontrado"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Error al consultar el detalle del usuario"
+              }
+
+/api/v1/user/updateUser/{id_user}:
+  put:
+    tags:
+      - Users
+    security:
+      - bearerAuth: []
+    description: Actualizar usuario
+    produces:
+      - application/json
+    parameters:
+      - name: id_user
+        in: path
+        description: ID del usuario
+        required: true
+        type: integer
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_name:
+                type: string
+                description: Primer nombre del usuario
+              second_name:
+                type: string
+                description: Segundo nombre del usuario
+              surname:
+                type: string
+                description: Primer apellido del usuario
+              second_sur_name:
+                type: string
+                description: Segundo apellido del usuario
+              type_document:
+                type: integer
+                description: Tipo de documento del usuario
+              document_number:
+                type: string
+                description: Número de documento del usuario
+              email:
+                type: string
+                description: Correo electrónico del usuario
+              phone:
+                type: string
+                description: Número de teléfono del usuario
+          example:
+            {
+              "first_name": "string",
+              "second_name": "string",
+              "surname": "string",
+              "second_sur_name": "string",
+              "type_document": "number",
+              "document_number": "string",
+              "email": "string",
+              "phone": "string"
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": true,
+                "message": "Se actualizo correctamente"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Error al actualizar"
+              }

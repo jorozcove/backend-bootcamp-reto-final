@@ -12,9 +12,9 @@ export default {
 		definition: {
 			openapi: '3.0.0',
 			info: {
-				title: 'Documentación de la API',
+				title: 'Documentación API reto final Bootcamp',
 				version: '1.0.0',
-				description: 'API reto final'
+				description: 'CRUD simple de usuarios, roles, tipos de documentos, preguntas, respuestas y formularios',
 			},
 			components: {
 				securitySchemes: {

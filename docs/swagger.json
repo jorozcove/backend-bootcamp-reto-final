@@ -1,0 +1,2335 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentación API reto final Bootcamp",
+        "version": "1.0.0",
+        "description": "CRUD simple de usuarios, roles, tipos de documentos, preguntas, respuestas y formularios"
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "Answer": {
+                "type": "object",
+                "properties": {
+                    "option": {
+                        "type": "string",
+                        "description": "Opción de respuesta"
+                    },
+                    "is_correct": {
+                        "type": "boolean",
+                        "description": "Indica si la respuesta es correcta"
+                    },
+                    "question_id": {
+                        "type": "integer",
+                        "description": "ID de la pregunta"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado de la respuesta"
+                    }
+                },
+                "required": [
+                    "option",
+                    "is_correct",
+                    "question_id",
+                    "state"
+                ],
+                "example": {
+                    "option": "string",
+                    "is_correct": true,
+                    "question_id": 1,
+                    "state": true
+                }
+            },
+            "Form": {
+                "type": "object",
+                "properties": {
+                    "student_id": {
+                        "type": "integer",
+                        "description": "ID del estudiante"
+                    },
+                    "answer_id": {
+                        "type": "integer",
+                        "description": "ID de la respuesta"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado del formulario"
+                    }
+                },
+                "required": [
+                    "student_id",
+                    "answer_id",
+                    "state"
+                ],
+                "example": {
+                    "student_id": 1,
+                    "answer_id": 1,
+                    "state": true
+                }
+            },
+            "Question": {
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "description": "Pregunta"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado de la pregunta"
+                    }
+                },
+                "required": [
+                    "question",
+                    "state"
+                ],
+                "example": {
+                    "question": "string",
+                    "state": true
+                }
+            },
+            "Role": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Nombre del rol"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado del rol"
+                    }
+                },
+                "required": [
+                    "name",
+                    "state"
+                ],
+                "example": {
+                    "name": "string",
+                    "state": true
+                }
+            },
+            "TypesDocuments": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Nombre del tipo de documento"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado del tipo de documento"
+                    }
+                },
+                "required": [
+                    "name",
+                    "state"
+                ],
+                "example": {
+                    "name": "string",
+                    "state": true
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "description": "Nombre del usuario"
+                    },
+                    "second_name": {
+                        "type": "string",
+                        "description": "Segundo nombre del usuario"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "description": "Apellido del usuario"
+                    },
+                    "second_sur_name": {
+                        "type": "string",
+                        "description": "Segundo apellido del usuario"
+                    },
+                    "type_document": {
+                        "type": "integer",
+                        "description": "Tipo de documento del usuario"
+                    },
+                    "document_number": {
+                        "type": "string",
+                        "description": "Número de documento del usuario"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Correo electrónico del usuario"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Contraseña del usuario"
+                    },
+                    "rol_id": {
+                        "type": "integer",
+                        "description": "Rol del usuario"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "Teléfono del usuario"
+                    },
+                    "state": {
+                        "type": "boolean",
+                        "description": "Estado del usuario"
+                    }
+                },
+                "required": [
+                    "first_name",
+                    "second_name",
+                    "surname",
+                    "second_sur_name",
+                    "type_document",
+                    "document_number",
+                    "email",
+                    "password",
+                    "rol_id",
+                    "phone",
+                    "state"
+                ],
+                "example": {
+                    "first_name": "string",
+                    "second_name": "string",
+                    "surname": "string",
+                    "second_sur_name": "string",
+                    "type_document": 1,
+                    "document_number": "string",
+                    "email": "string",
+                    "password": "string",
+                    "rol_id": 1,
+                    "phone": "string",
+                    "state": true
+                }
+            }
+        }
+    },
+    "paths": {
+        "/api/v1/answer/getOptions/{id_question}": {
+            "get": {
+                "tags": [
+                    "Respuestas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listar respuestas",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_question",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID de la pregunta"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Answer"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "answers": [
+                                        {
+                                            "id": 1,
+                                            "option": "Opción 1"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "option": "Opción 2"
+                                        }
+                                    ],
+                                    "message": "Listado de respuestas"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Answer"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al listar las respuestas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/answer/updateAnswer/{id_answer}": {
+            "post": {
+                "tags": [
+                    "Respuestas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Editar respuesta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_answer",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID de la respuesta"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "option": {
+                                        "type": "string"
+                                    },
+                                    "iscorrect": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "option": "Opción 1",
+                                "iscorrect": true
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Answer"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Respuesta editada con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Answer"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al editar la respuesta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/form/getQuestions": {
+            "get": {
+                "tags": [
+                    "Formularios"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listado de preguntas",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "questions": [
+                                        {
+                                            "id": 1,
+                                            "question": "¿Pregunta 1?",
+                                            "options": [
+                                                {
+                                                    "id": 1,
+                                                    "option": "Opcion 1"
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "option": "Opcion 2"
+                                                },
+                                                {
+                                                    "id": 3,
+                                                    "option": "Opcion 3"
+                                                },
+                                                {
+                                                    "id": 4,
+                                                    "option": "Opcion 4"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": 2,
+                                            "question": "¿Pregunta 2?",
+                                            "options": [
+                                                {
+                                                    "id": 5,
+                                                    "option": "Opcion 1"
+                                                },
+                                                {
+                                                    "id": 6,
+                                                    "option": "Opcion 2"
+                                                },
+                                                {
+                                                    "id": 7,
+                                                    "option": "Opcion 3"
+                                                },
+                                                {
+                                                    "id": 8,
+                                                    "option": "Opcion 4"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "message": "Listado de preguntas"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al listar las preguntas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/form/postQuestions": {
+            "post": {
+                "tags": [
+                    "Formularios"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Guardar respuestas",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "estudianteId": {
+                                        "type": "integer"
+                                    },
+                                    "answers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "estudianteId": 1,
+                                    "answers": [
+                                        1,
+                                        2,
+                                        3,
+                                        4
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Respuestas guardadas con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "No se pudieron almacenar las respuestas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question/create": {
+            "post": {
+                "tags": [
+                    "Preguntas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Crear pregunta",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "question": {
+                                        "type": "string",
+                                        "description": "Pregunta"
+                                    },
+                                    "options": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "option": {
+                                                    "type": "string",
+                                                    "description": "Opción"
+                                                },
+                                                "iscorrect": {
+                                                    "type": "boolean",
+                                                    "description": "Es correcta"
+                                                }
+                                            }
+                                        },
+                                        "description": "Opciones"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "question": "string",
+                                "options": [
+                                    {
+                                        "option": "string",
+                                        "iscorrect": true
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Pregunta creada exitosamente"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al crear la pregunta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question/getQuestions": {
+            "get": {
+                "tags": [
+                    "Preguntas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listar preguntas",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "questions": [
+                                        {
+                                            "id": 1,
+                                            "question": "string"
+                                        }
+                                    ],
+                                    "message": "Listado de preguntas"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al listar las preguntas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question/deleteQuestion/{id_question}": {
+            "delete": {
+                "tags": [
+                    "Preguntas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Eliminar pregunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_question",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID de la pregunta"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Pregunta eliminada con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al eliminar la pregunta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question/updateQuestion/{id_question}": {
+            "put": {
+                "tags": [
+                    "Preguntas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Editar pregunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_question",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID de la pregunta"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "question": {
+                                        "type": "string",
+                                        "description": "Pregunta"
+                                    }
+                                },
+                                "example": {
+                                    "question": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Pregunta editada con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Question"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al editar la pregunta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/rol/createRole": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Crear rol",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Nombre del rol"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "role creado exitosamente"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al crear el rol"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/rol/getRoles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listar roles",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "roles": [
+                                        {
+                                            "id": 1,
+                                            "name": "admin"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "user"
+                                        }
+                                    ],
+                                    "message": "Listado de roles"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al listar roles"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/rol/updateRol/{id_role}": {
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Editar rol",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_role",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID del rol"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Nombre del rol"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Rol editado con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al actualizar Rol"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/rol/deleteRol/{id_role}": {
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Eliminar rol",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_role",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "ID del rol"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Rol eliminado con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/Role"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al eliminar Rol"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/TypesDocument/create": {
+            "post": {
+                "tags": [
+                    "Tipos de documentos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Crear tipo de documento",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Nombre del tipo de documento"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "TypesDocument creado exitosamente"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al crear el TypesDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/TypesDocument/getTypesDocuments": {
+            "get": {
+                "tags": [
+                    "Tipos de documentos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listar tipos de documentos",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "typesDocuments": [
+                                        {
+                                            "id": 1,
+                                            "name": "Cédula de ciudadanía"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Cédula de extranjería"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "Pasaporte"
+                                        }
+                                    ],
+                                    "message": "Listado de typesDocuments"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al listar typesDocuments"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/TypesDocument/updateTypesDocument/{id_TypesDocument}": {
+            "put": {
+                "tags": [
+                    "Tipos de documentos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Editar tipo de documento",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_TypesDocument",
+                        "required": true,
+                        "description": "Id del tipo de documento",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Nombre del tipo de documento"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "TypesDocument editado con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al actualizar TypesDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/TypesDocument/deleteTypesDocument/{id_TypesDocument}": {
+            "delete": {
+                "tags": [
+                    "Tipos de documentos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Eliminar tipo de documento",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_TypesDocument",
+                        "required": true,
+                        "description": "Id del tipo de documento",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "TypesDocument eliminado con exito"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/TypesDocument"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al eliminar TypesDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/create": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Crear usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "firstName": {
+                                        "type": "string",
+                                        "description": "Nombre del usuario"
+                                    },
+                                    "secondName": {
+                                        "type": "string",
+                                        "description": "Segundo nombre del usuario"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "description": "Apellido del usuario"
+                                    },
+                                    "secondSurName": {
+                                        "type": "string",
+                                        "description": "Segundo apellido del usuario"
+                                    },
+                                    "TypesDocument": {
+                                        "type": "integer",
+                                        "description": "Tipo de documento del usuario"
+                                    },
+                                    "documentNumber": {
+                                        "type": "string",
+                                        "description": "Número de documento del usuario"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Correo electrónico del usuario"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Contraseña del usuario"
+                                    },
+                                    "rol": {
+                                        "type": "integer",
+                                        "description": "Rol del usuario"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "Teléfono del usuario"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "firstName": "string",
+                                "secondName": "string",
+                                "surname": "string",
+                                "secondSurName": "string",
+                                "TypesDocument": "number",
+                                "documentNumber": "string",
+                                "email": "string",
+                                "password": "string",
+                                "rol": "number",
+                                "phone": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Estudiante creado exitosamente"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Fallo en la creación del estudiante"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Iniciar sesión",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Correo electrónico del usuario"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Contraseña del usuario"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "string",
+                                "password": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "token": "string",
+                                    "state": true,
+                                    "id": "number",
+                                    "name": "string",
+                                    "role": "string",
+                                    "msg": "Ingreso exitoso"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "msg": "Error en el servidor"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "msg": "Error en el servidor"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/getUsers": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listado de usuarios",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "users": [
+                                        {
+                                            "first_name": "string",
+                                            "second_name": "string",
+                                            "surname": "string",
+                                            "second_sur_name": "string",
+                                            "type_document": "number",
+                                            "document_number": "string",
+                                            "email": "string",
+                                            "phone": "string"
+                                        }
+                                    ],
+                                    "message": "Listado de estudiantes"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Falta el token de autorización"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Fallo en el listado de estudiantes"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/getUser/{id_user}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Obtener usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "user": [
+                                        {
+                                            "first_name": "string",
+                                            "second_name": "string",
+                                            "surname": "string",
+                                            "second_sur_name": "string",
+                                            "type_document": "number",
+                                            "document_number": "string",
+                                            "email": "string",
+                                            "phone": "string"
+                                        }
+                                    ],
+                                    "message": "Estudiante encontrado"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Estudiante no encontrado"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al consultar el detalle del usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/updateUser/{id_user}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Actualizar usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "description": "Primer nombre del usuario"
+                                    },
+                                    "second_name": {
+                                        "type": "string",
+                                        "description": "Segundo nombre del usuario"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "description": "Primer apellido del usuario"
+                                    },
+                                    "second_sur_name": {
+                                        "type": "string",
+                                        "description": "Segundo apellido del usuario"
+                                    },
+                                    "type_document": {
+                                        "type": "integer",
+                                        "description": "Tipo de documento del usuario"
+                                    },
+                                    "document_number": {
+                                        "type": "string",
+                                        "description": "Número de documento del usuario"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Correo electrónico del usuario"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "Número de teléfono del usuario"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "first_name": "string",
+                                "second_name": "string",
+                                "surname": "string",
+                                "second_sur_name": "string",
+                                "type_document": "number",
+                                "document_number": "string",
+                                "email": "string",
+                                "phone": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Petición exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": true,
+                                    "message": "Se actualizo correctamente"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "example": {
+                                    "state": false,
+                                    "message": "Error al actualizar"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Answer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "option": {
+                    "type": "string"
+                },
+                "is_correct": {
+                    "type": "boolean"
+                },
+                "question_id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Form": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "student_id": {
+                    "type": "integer"
+                },
+                "answer_id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Question": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "question": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Role": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "TypesDocuments": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "second_name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "second_sur_name": {
+                    "type": "string"
+                },
+                "type_document": {
+                    "type": "integer"
+                },
+                "document_number": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "rol_id": {
+                    "type": "integer"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    },
+    "tags": []
+}

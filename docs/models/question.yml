@@ -1,0 +1,34 @@
+definitions:
+  Question:
+    type: object
+    properties:
+      id:
+        type: integer
+      question:
+        type: string
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        question:
+          type: string
+          description: Pregunta
+        state:
+          type: boolean
+          description: Estado de la pregunta
+      required:
+        - question
+        - state
+      example:
+        question: "string"
+        state: true

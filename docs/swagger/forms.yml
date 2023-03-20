@@ -1,0 +1,226 @@
+# //Form routes
+#   Route.group(() => {
+#     Route.get('/getQuestions', 'FormsController.getQuestions');
+#     Route.post('/postQuestions', 'FormsController.postQuestions');
+#   }).prefix('form').middleware('auth')
+
+# public async getQuestions({response}: HttpContextContract){
+#         try{
+#             const questions = await Question.query().select('id','question').where({state: true})
+            
+#             let q_obj : QuestionObj[] = []
+
+#             for (let question of questions) {
+#                 let options = await Answer.query().select('id','option',).where({question_id: question.id})
+                
+#                 q_obj.push({
+#                     id : question.id,
+#                     question : question.question,
+#                     options : options
+#                 })
+#             }
+            
+#             return response.status(200).json({
+#                 state: true,
+#                 questions: q_obj,
+#                 message: "Listado de preguntas"
+#             })
+
+#         } catch (error) {
+#             return response.status(500).json({
+#                 state: false,
+#                 message: "Error al listar las preguntas"
+#             })   
+#         }
+#     }
+
+########### Route.get('/getQuestions', 'FormsController.getQuestions')
+
+/api/v1/form/getQuestions:
+  get:
+    tags:
+      - Formularios
+    security:
+      - bearerAuth: []
+    description: Listado de preguntas
+    produces:
+      - application/json
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "questions": [
+                  {
+                    "id": 1,
+                    "question": "¿Pregunta 1?",
+                    "options": [
+                      {
+                        "id": 1,
+                        "option": "Opcion 1"
+                      },
+                      {
+                        "id": 2,
+                        "option": "Opcion 2"
+                      },
+                      {
+                        "id": 3,
+                        "option": "Opcion 3"
+                      },
+                      {
+                        "id": 4,
+                        "option": "Opcion 4"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "question": "¿Pregunta 2?",
+                    "options": [
+                      {
+                        "id": 5,
+                        "option": "Opcion 1"
+                      },
+                      {
+                        "id": 6,
+                        "option": "Opcion 2"
+                      },
+                      {
+                        "id": 7,
+                        "option": "Opcion 3"
+                      },
+                      {
+                        "id": 8,
+                        "option": "Opcion 4"
+                      }
+                    ]
+                  }
+                ],
+                "message": "Listado de preguntas"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "Error al listar las preguntas"
+              }
+
+# public async postQuestions({request,response}: HttpContextContract){
+#         try {
+#             const {estudianteId, answers} = request.all()
+#             console.log(estudianteId)
+#             for(let answer_id of answers){
+#                 await Form.create({
+#                     student_id: estudianteId,
+#                     answer_id: answer_id,
+#                     state: true
+#                 })
+#             }
+#             return response.status(200).json({
+#                 state: true,
+#                 message: "Respuestas guardadas con exito"
+#             })
+#         } catch (error) {
+#             console.log(error)
+#             return response.status(500).json({
+#                 state: false,
+#                 message: "No se pudieron almacenar las respuestas"
+#             })
+#         }
+#     }
+
+########### Route.post('/postQuestions', 'FormsController.postQuestions')
+
+/api/v1/form/postQuestions:
+  post:
+    tags:
+      - Formularios
+    security:
+      - bearerAuth: []
+    description: Guardar respuestas
+    produces:
+      - application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              estudianteId:
+                type: integer
+              answers:
+                type: array
+                items:
+                  type: integer
+            example:
+              {
+                "estudianteId": 1,
+                "answers": [1,2,3,4]
+              }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "message": "Respuestas guardadas con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "No se pudieron almacenar las respuestas"
+              }

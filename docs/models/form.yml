@@ -1,0 +1,41 @@
+definitions:
+  Form:
+    type: object
+    properties:
+      id:
+        type: integer
+      student_id:
+        type: integer
+      answer_id:
+        type: integer
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    Form:
+      type: object
+      properties:
+        student_id:
+          type: integer
+          description: ID del estudiante
+        answer_id:
+          type: integer
+          description: ID de la respuesta
+        state:
+          type: boolean
+          description: Estado del formulario
+      required:
+        - student_id
+        - answer_id
+        - state
+      example:
+        student_id: 1
+        answer_id: 1
+        state: true

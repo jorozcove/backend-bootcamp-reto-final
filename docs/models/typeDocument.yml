@@ -1,0 +1,34 @@
+definitions:
+  TypesDocuments:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    TypesDocuments:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del tipo de documento
+        state:
+          type: boolean
+          description: Estado del tipo de documento
+      required:
+        - name
+        - state
+      example:
+        name: "string"
+        state: true

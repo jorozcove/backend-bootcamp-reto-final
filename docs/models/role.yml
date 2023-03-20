@@ -1,0 +1,46 @@
+# export default class Role extends BaseModel {
+#   @column({ isPrimary: true }) public id: number
+#   @column() public name:string
+#   @column() public state: boolean
+
+#   @column.dateTime({ autoCreate: true })
+#   public createdAt: DateTime
+
+#   @column.dateTime({ autoCreate: true, autoUpdate: true })
+#   public updatedAt: DateTime
+# }
+
+definitions:
+  Role:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    Role:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del rol
+        state:
+          type: boolean
+          description: Estado del rol
+      required:
+        - name
+        - state
+      example:
+        name: "string"
+        state: true

@@ -1,0 +1,138 @@
+/api/v1/answer/getOptions/{id_question}:
+  get:
+    tags:
+      - Respuestas
+    security:
+      - bearerAuth: []
+    description: Listar respuestas
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_question
+        schema:
+          type: integer
+        required: true
+        description: ID de la pregunta
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Answer'
+            example:
+              {
+                "state": true,
+                "answers": [
+                  {
+                    "id": 1,
+                    "option": "Opción 1"
+                  },
+                  {
+                    "id": 2,
+                    "option": "Opción 2"
+                  }
+                ],
+                "message": "Listado de respuestas"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Answer'
+            example:
+              {
+                "state": false,
+                "message": "Error al listar las respuestas"
+              }
+
+/api/v1/answer/updateAnswer/{id_answer}:
+  post:
+    tags:
+      - Respuestas
+    security:
+      - bearerAuth: []
+    description: Editar respuesta
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_answer
+        schema:
+          type: integer
+        required: true
+        description: ID de la respuesta
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              option:
+                type: string
+              iscorrect:
+                type: boolean
+          example:
+            {
+              "option": "Opción 1",
+              "iscorrect": true
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Answer'
+            example:
+              {
+                "state": true,
+                "message": "Respuesta editada con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Answer'
+            example:
+              {
+                "state": false,
+                "message": "Error al editar la respuesta"
+              }

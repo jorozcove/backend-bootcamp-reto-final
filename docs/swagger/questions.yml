@@ -1,0 +1,263 @@
+/api/v1/question/create:
+  post:
+    tags:
+      - Preguntas
+    security:
+      - bearerAuth: []
+    description: Crear pregunta
+    produces:
+      - application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: Pregunta
+              options:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    option:
+                      type: string
+                      description: Opción
+                    iscorrect:
+                      type: boolean
+                      description: Es correcta
+                description: Opciones
+          example:
+            {
+              "question": "string",
+              "options": [
+                {
+                  "option": "string",
+                  "iscorrect": true
+                }
+              ]
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "message": "Pregunta creada exitosamente"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "Error al crear la pregunta"
+              }
+
+/api/v1/question/getQuestions:
+  get:
+    tags:
+      - Preguntas
+    security:
+      - bearerAuth: []
+    description: Listar preguntas
+    produces:
+      - application/json
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "questions": [
+                  {
+                    "id": 1,
+                    "question": "string"
+                  }
+                ],
+                "message": "Listado de preguntas"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "Error al listar las preguntas"
+              }
+
+/api/v1/question/deleteQuestion/{id_question}:
+  delete:
+    tags:
+      - Preguntas
+    security:
+      - bearerAuth: []
+    description: Eliminar pregunta
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_question
+        schema:
+          type: integer
+        required: true
+        description: ID de la pregunta
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "message": "Pregunta eliminada con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "Error al eliminar la pregunta"
+              }
+
+/api/v1/question/updateQuestion/{id_question}:
+  put:
+    tags:
+      - Preguntas
+    security:
+      - bearerAuth: []
+    description: Editar pregunta
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_question
+        schema:
+          type: integer
+        required: true
+        description: ID de la pregunta
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: Pregunta
+            example:
+              {
+                "question": "string"
+              }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": true,
+                "message": "Pregunta editada con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/Question'
+            example:
+              {
+                "state": false,
+                "message": "Error al editar la pregunta"
+              }

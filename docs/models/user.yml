@@ -1,0 +1,126 @@
+# export default class User extends BaseModel {
+#   @column({ isPrimary: true }) public id: number
+#   @column() public first_name: string
+#   @column() public second_name: string
+#   @column() public surname: string
+#   @column() public second_sur_name: string
+#   @column() public type_document: number
+#   @column() public document_number: string
+#   @column() public email: string
+#   @column() public password: string
+#   @column() public rol_id: number
+#   @column() public phone: string
+#   @column() public state: boolean
+
+#   @hasOne(()=>TypesDocuments,{
+#     localKey: 'type_document',
+#     foreignKey: 'id',
+#   }) public t_document: HasOne<typeof TypesDocuments>
+
+#   @hasMany(()=>role,{
+#     localKey: 'rol_id',
+#     foreignKey: 'id',
+#   }) public rol: HasMany<typeof role>
+
+#   @column.dateTime({ autoCreate: true }) public createdAt: DateTime
+#   @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
+# }
+
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      second_name:
+        type: string
+      surname:
+        type: string
+      second_sur_name:
+        type: string
+      type_document:
+        type: integer
+      document_number:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      rol_id:
+        type: integer
+      phone:
+        type: string
+      state:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        second_name:
+          type: string
+          description: Segundo nombre del usuario
+        surname:
+          type: string
+          description: Apellido del usuario
+        second_sur_name:
+          type: string
+          description: Segundo apellido del usuario
+        type_document:
+          type: integer
+          description: Tipo de documento del usuario
+        document_number:
+          type: string
+          description: Número de documento del usuario
+        email:
+          type: string
+          description: Correo electrónico del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        rol_id:
+          type: integer
+          description: Rol del usuario
+        phone:
+          type: string
+          description: Teléfono del usuario
+        state:
+          type: boolean
+          description: Estado del usuario
+      required:
+        - first_name
+        - second_name
+        - surname
+        - second_sur_name
+        - type_document
+        - document_number
+        - email
+        - password
+        - rol_id
+        - phone
+        - state
+      example:
+        first_name: "string"
+        second_name: "string"
+        surname: "string"
+        second_sur_name: "string"
+        type_document: 1
+        document_number: "string"
+        email: "string"
+        password: "string"
+        rol_id: 1
+        phone: "string"
+        state: true

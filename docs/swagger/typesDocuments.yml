@@ -1,0 +1,253 @@
+/api/v1/TypesDocument/create:
+  post:
+    tags:
+      - Tipos de documentos
+    security:
+      - bearerAuth: []
+    description: Crear tipo de documento
+    produces:
+      - application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del tipo de documento
+          example:
+            {
+              "name": "string"
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": true,
+                "message": "TypesDocument creado exitosamente"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": false,
+                "message": "Error al crear el TypesDocument"
+              }
+
+/api/v1/TypesDocument/getTypesDocuments:
+  get:
+    tags:
+      - Tipos de documentos
+    security:
+      - bearerAuth: []
+    description: Listar tipos de documentos
+    produces:
+      - application/json
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": true,
+                "typesDocuments": [
+                  {
+                    "id": 1,
+                    "name": "Cédula de ciudadanía"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Cédula de extranjería"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Pasaporte"
+                  }
+                ],
+                "message": "Listado de typesDocuments"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": false,
+                "message": "Error al listar typesDocuments"
+              }
+
+/api/v1/TypesDocument/updateTypesDocument/{id_TypesDocument}:
+  put:
+    tags:
+      - Tipos de documentos
+    security:
+      - bearerAuth: []
+    description: Editar tipo de documento
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_TypesDocument
+        required: true
+        description: Id del tipo de documento
+        schema:
+          type: integer
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del tipo de documento
+          example:
+            {
+              "name": "string"
+            }
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": true,
+                "message": "TypesDocument editado con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": false,
+                "message": "Error al actualizar TypesDocument"
+              }
+
+/api/v1/TypesDocument/deleteTypesDocument/{id_TypesDocument}:
+  delete:
+    tags:
+      - Tipos de documentos
+    security:
+      - bearerAuth: []
+    description: Eliminar tipo de documento
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id_TypesDocument
+        required: true
+        description: Id del tipo de documento
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Petición exitosa
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": true,
+                "message": "TypesDocument eliminado con exito"
+              }
+      401:
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/User'
+            example:
+              {
+                "state": false,
+                "message": "Falta el token de autorización"
+              }
+      500:
+        description: Error en el servidor
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/TypesDocument'
+            example:
+              {
+                "state": false,
+                "message": "Error al eliminar TypesDocument"
+              }
