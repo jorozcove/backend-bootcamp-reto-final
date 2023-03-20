@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import types_documents from './TypeDocument'
+import TypesDocuments from './TypeDocument'
 import role from './Role'
 
 export default class User extends BaseModel {
@@ -17,10 +17,10 @@ export default class User extends BaseModel {
   @column() public phone: string
   @column() public state: boolean
 
-  @hasOne(()=>types_documents,{
+  @hasOne(()=>TypesDocuments,{
     localKey: 'type_document',
     foreignKey: 'id',
-  }) public t_document: HasOne<typeof types_documents>
+  }) public t_document: HasOne<typeof TypesDocuments>
 
   @hasMany(()=>role,{
     localKey: 'rol_id',

@@ -5,7 +5,7 @@ export default class Answer extends BaseModel {
   @column({ isPrimary: true }) public id: number
   @column() public option: string
   @column() public is_correct: boolean
-  @column() public question_id: Number
+  @column() public question_id: number
   @column() public state: boolean
 
   @column.dateTime({ autoCreate: true })

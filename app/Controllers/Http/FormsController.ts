@@ -3,7 +3,7 @@ import Form from 'App/Models/Form';
 import Question from 'App/Models/Question'
 import Answer from 'App/Models/Answer';
 
-interface question {
+interface QuestionObj {
     id: number,
     question: string,
     options: Answer[]
@@ -14,7 +14,7 @@ export default class FormsController {
         try{
             const questions = await Question.query().select('id','question').where({state: true})
             
-            let q_obj : question[] = []
+            let q_obj : QuestionObj[] = []
 
             for (let question of questions) {
                 let options = await Answer.query().select('id','option',).where({question_id: question.id})

@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class types_documents extends BaseModel {
+export default class TypesDocuments extends BaseModel {
   @column({ isPrimary: true }) public id: number
   @column() name: string
   @column() state: boolean

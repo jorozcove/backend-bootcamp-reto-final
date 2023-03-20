@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Role from 'App/Models/role';
+import Role from 'App/Models/Role';
 
-export default class rolesController {
+export default class RolesController {
     public async createRole({request, response}: HttpContextContract){
         try{
             const {name} = request.all();
