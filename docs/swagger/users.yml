@@ -23,7 +23,7 @@
               secondSurName:
                 type: string
                 description: Segundo apellido del usuario
-              TypesDocument:
+              typeDocument:
                 type: integer
                 description: Tipo de documento del usuario
               documentNumber:
@@ -47,7 +47,7 @@
               "secondName": "string",
               "surname": "string",
               "secondSurName": "string",
-              "TypesDocument": "number",
+              "typeDocument": "number",
               "documentNumber": "string",
               "email": "string",
               "password": "string",
@@ -174,14 +174,15 @@
                 "state": true,
                 "users": [
                   {
-                    "first_name": "string",
-                    "second_name": "string",
+                    "firstName": "string",
+                    "secondName": "string",
                     "surname": "string",
-                    "second_sur_name": "string",
-                    "type_document": "number",
-                    "document_number": "string",
+                    "secondSurName": "string",
+                    "typeDocument": "number",
+                    "documentNumber": "string",
                     "email": "string",
-                    "phone": "string"
+                    "phone": "string",
+                    "rol": "number"
                   }
                 ],
                 "message": "Listado de estudiantes"
@@ -240,18 +241,19 @@
             example:
               {
                 "state": true,
-                "user": [
+                "user": 
                   {
-                    "first_name": "string",
-                    "second_name": "string",
+                    "firstName": "string",
+                    "secondName": "string",
                     "surname": "string",
-                    "second_sur_name": "string",
-                    "type_document": "number",
-                    "document_number": "string",
+                    "secondSurName": "string",
+                    "typeDocument": "number",
+                    "documentNumber": "string",
                     "email": "string",
-                    "phone": "string"
+                    "phone": "string",
+                    "rol": "number"
                   }
-                ],
+                ,
                 "message": "Estudiante encontrado"
               }
       404:
@@ -281,7 +283,7 @@
                 "message": "Error al consultar el detalle del usuario"
               }
 
-/api/v1/user/updateUser/{id_user}:
+/api/v1/user/update/{id_user}:
   put:
     tags:
       - Users
@@ -302,39 +304,43 @@
           schema:
             type: object
             properties:
-              first_name:
+              firstName:
                 type: string
                 description: Primer nombre del usuario
-              second_name:
+              secondName:
                 type: string
                 description: Segundo nombre del usuario
               surname:
                 type: string
                 description: Primer apellido del usuario
-              second_sur_name:
+              secondSurName:
                 type: string
                 description: Segundo apellido del usuario
-              type_document:
+              typeDocument:
                 type: integer
                 description: Tipo de documento del usuario
-              document_number:
+              documentNumber:
                 type: string
                 description: Número de documento del usuario
               email:
                 type: string
                 description: Correo electrónico del usuario
+              password:
+                type: string
+                description: Contraseña del usuario
               phone:
                 type: string
                 description: Número de teléfono del usuario
           example:
             {
-              "first_name": "string",
-              "second_name": "string",
+              "firstName": "string",
+              "secondName": "string",
               "surname": "string",
-              "second_sur_name": "string",
-              "type_document": "number",
-              "document_number": "string",
+              "secondSurName": "string",
+              "typeDocument": "number",
+              "documentNumber": "string",
               "email": "string",
+              "password": "string",
               "phone": "string"
             }
     responses:

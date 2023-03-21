@@ -8,7 +8,7 @@ const bcryptjs = require('bcryptjs')
 export default class UsersController {
     public async register({request, response}: HttpContextContract){
       try{
-        const {firstName , secondName, surname, secondSurName, TypesDocument, documentNumber, email, password, rol, phone} = request.all();
+        const {firstName , secondName, surname, secondSurName, typeDocument, documentNumber, email, password, rol, phone} = request.all();
 
         //check if the user exists
         const check_user = await User.findBy('email', email)
@@ -24,7 +24,7 @@ export default class UsersController {
         user.second_name = secondName;
         user.surname = surname;
         user.second_sur_name = secondSurName;
-        user.type_document = TypesDocument;
+        user.type_document = typeDocument;
         user.document_number = documentNumber;
         user.email = email;
         user.rol_id = rol;
@@ -57,7 +57,7 @@ export default class UsersController {
     //     "secondName": "Perez",
     //     "surname": "Perez",
     //     "secondSurName": "Perez",
-    //     "TypesDocument": "CC",
+    //     "typeDocument": "CC",
     //     "documentNumber": "123456789",
     //     "email": "juanPerez@gmail.com",
     //     "password": "1234",
@@ -116,13 +116,33 @@ export default class UsersController {
 
       public async getUsers({response}: HttpContextContract){
         try {
-          const users = await User.query().select('first_name','second_name','surname','second_sur_name','type_document','document_number','email','phone').where({})
+          const users = await User.query().select('first_name','second_name','surname','second_sur_name','type_document','document_number','email','phone','rol_id').where({})
+          console.log(users)
+          let usersData : Object[] = []
+
+          for(let user of users){
+            const userData = {
+              firstName: user.first_name,
+              secondName: user.second_name,
+              surname: user.surname,
+              secondSurName: user.second_sur_name,
+              typeDocument: user.type_document,
+              documentNumber: user.document_number,
+              email: user.email,
+              phone: user.phone,
+              rol: user.rol_id,
+            }
+
+            usersData.push(userData)
+          }
+
           return response.status(200).json({
             state: true,
-            users,
+            users: usersData,
             message: "Listado de estudiantes"
           })
         } catch (error) {
+          console.log(error)
           return response.status(500).json({
             state: false,
             message: "Fallo en el listado de estudiantes"
@@ -134,14 +154,25 @@ export default class UsersController {
         try {
           const id = request.param('id_user')
 
-          const user = await User.query().select('first_name','second_name','surname','second_sur_name','type_document','document_number','email','phone').where('id', id)
-
-          console.log(user)
+          const user = await User.query().select('first_name','second_name','surname','second_sur_name','type_document','document_number','email','phone','rol_id').where('id', id)
 
           if (user.length > 0){
+
+            const userData = {
+              firstName: user[0].first_name,
+              secondName: user[0].second_name,
+              surname: user[0].surname,
+              secondSurName: user[0].second_sur_name,
+              typeDocument: user[0].type_document,
+              documentNumber: user[0].document_number,
+              email: user[0].email,
+              phone: user[0].phone,
+              rol: user[0].rol_id,
+            }
+
             return response.status(200).json({
               state: true,
-              user: user[0],
+              user: userData,
               message: "Estudiante encontrado"
             })
           }
@@ -173,7 +204,7 @@ export default class UsersController {
           update_data['second_name'] = data.secondName
           update_data['surname'] = data.surname
           update_data['second_sur_name'] = data.secondSurName
-          update_data['type_document'] = data.TypesDocument
+          update_data['type_document'] = data.typeDocument
           update_data['document_number'] = data.documentNumber
           update_data['email'] = data.email
           update_data['phone'] = data.phone

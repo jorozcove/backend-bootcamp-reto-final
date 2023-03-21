@@ -1,4 +1,4 @@
-/api/v1/rol/createRole:
+/api/v1/rol/create:
   post:
     tags:
       - Roles
