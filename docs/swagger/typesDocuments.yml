@@ -2,8 +2,6 @@
   post:
     tags:
       - Tipos de documentos
-    security:
-      - bearerAuth: []
     description: Crear tipo de documento
     produces:
       - application/json

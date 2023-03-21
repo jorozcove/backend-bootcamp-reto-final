@@ -1,41 +1,7 @@
-#   Route.group(() =>{
-#     Route.post('/create', 'RolesController.createRole');
-#     Route.get('/getRoles', 'RolesController.getRoles')
-#     Route.delete('/deleteRol/:id_role', 'RolesController.deleeRole')
-#     Route.put('/updateRol/:id_role', 'RolesController.updateRole')
-#   }).prefix('rol').middleware(['auth', 'admin'])
-
-# public async createRole({request, response}: HttpContextContract){
-#         try{
-#             const {name} = request.all();
-#             console.log(name)
-#             const role = new Role();
-#             role.name = name;
-#             role.state = true;
-#             await role.save();
-
-#             return response.status(200).json({
-#                 "state": true,
-#                 "message": "role creado exitosamente"
-#             })
-
-#         }catch(e){
-#             console.log(e)
-#             return response.status(500).json({
-#                 "state": false,
-#                 "message": "Error al crear el rol"
-#             })
-#         }
-#     }
-
-########### Route.post('/createRole', 'RolesController.createRole');
-
 /api/v1/rol/createRole:
   post:
     tags:
       - Roles
-    security:
-      - bearerAuth: []
     description: Crear rol
     produces:
       - application/json
@@ -92,25 +58,6 @@
                 "state": false,
                 "message": "Error al crear el rol"
               }
-
-# public async getRoles({response}: HttpContextContract){
-#         try{
-#             const roles = await Role.query().select('id','name').where({})
-#             return response.status(200).json({
-#                 state: true,
-#                 roles,
-#                 message: "Listado de roles"
-#             }) 
-#         } catch (error) {
-#             console.log(error)
-#             return response.status(500).json({
-#                 state: false,
-#                 message: "Error al listar roles"
-#             })
-#         }
-#     }
-
-########### Route.get('/getRoles', 'RolesController.getRoles')
 
 /api/v1/rol/getRoles:
   get:
@@ -171,25 +118,6 @@
                 "state": false,
                 "message": "Error al listar roles"
               }
-
-# public async updateRole({request, response}: HttpContextContract){
-#         try {
-#             const id = request.param('id_role')
-#             const data = request.all()
-#             await Role.query().where('id', id).update(data)
-#             return response.status(200).json({
-#                 state: true,
-#                 message: "Rol editado con exito"
-#             })
-#         } catch (error) {
-#             return response.status(500).json({
-#                 state: false,
-#                 message: "Error al actualizar Rol"
-#             })
-#         }
-#     }
-
-########### Route.put('/updateRol/:id_role', 'RolesController.updateRole')
 
 /api/v1/rol/updateRol/{id_role}:
   put:
@@ -260,24 +188,6 @@
                 "state": false,
                 "message": "Error al actualizar Rol"
               }
-
-# public async deleteRole({request, response}: HttpContextContract){
-#         try {
-#             const id = request.param('id_role')
-#             await Role.query().where('id', id).delete()
-#             return response.status(200).json({
-#                 state: true,
-#                 message: "Rol eliminado con exito"
-#             })
-#         } catch (error) {
-#             return response.status(500).json({
-#                 state: false,
-#                 message: "Error al eliminar Rol"
-#             })
-#         }
-#     }
-
-########### Route.delete('/deleteRol/:id_role', 'RolesController.deleteRole')
 
 /api/v1/rol/deleteRol/{id_role}:
   delete:
