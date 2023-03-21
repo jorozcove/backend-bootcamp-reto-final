@@ -13,16 +13,16 @@ Route.group(() => {
   }).prefix('user')
 
   //Role routes
+  Route.post('/rol/create', 'RolesController.createRole');
   Route.group(() =>{
-    Route.post('/create', 'RolesController.createRole');
     Route.get('/getRoles', 'RolesController.getRoles')
-    Route.delete('/deleteRol/:id_role', 'RolesController.deleeRole')
+    Route.delete('/deleteRol/:id_role', 'RolesController.deleteRole')
     Route.put('/updateRol/:id_role', 'RolesController.updateRole')
   }).prefix('rol').middleware(['auth', 'admin'])
 
   //Doc Type routes
+  Route.post('/TypesDocument/create', 'TypesDocumentsController.createTypesDocument');
   Route.group(() =>{
-    Route.post('/create', 'TypesDocumentsController.createTypesDocument');
     Route.get('/getTypesDocuments', 'TypesDocumentsController.getTypesDocuments')
     Route.delete('/deleteTypesDocument/:id_TypesDocument', 'TypesDocumentsController.deleteTypesDocument')
     Route.put('/updateTypesDocument/:id_TypesDocument', 'TypesDocumentsController.updateTypesDocument')
@@ -37,7 +37,7 @@ Route.group(() => {
 
     //Answer routes
     Route.get('/getOptions/:id_question', 'AnswersController.listAnswers');
-    Route.post('/updateAnswer/:id_answer', 'AnswersController.updateAnswerById').middleware('admin');
+    Route.put('/updateAnswer/:id_answer', 'AnswersController.updateAnswerById').middleware('admin');
 
   }).prefix('question').middleware('auth')
 

@@ -4,7 +4,6 @@ import Question from 'App/Models/Question';
 
 export default class AnswersController {
     public async createAnswer(q_id: number, option: string, iscorrect: boolean){
-        console.log()
         try {
             if(await this.validateQuestion(q_id)){
                 const answer = new Answer();
@@ -48,6 +47,7 @@ export default class AnswersController {
                 message: "Respuesta editada con exito"
             })
         } catch (error) {
+            console.log(error)
             return response.status(500).json({
                 state: false,
                 message: "Error al editar la respuesta"
@@ -57,7 +57,7 @@ export default class AnswersController {
 
     public async listAnswers({response, request}: HttpContextContract){
         try {
-            const {question_id} = request.param('id_question')
+            const question_id = request.param('id_question')
             const answers = await Answer.query().select('id','option').where({question_id: question_id})
             return response.status(200).json({
                 state: true,

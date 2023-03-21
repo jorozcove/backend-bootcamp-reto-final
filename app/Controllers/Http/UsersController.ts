@@ -10,6 +10,15 @@ export default class UsersController {
       try{
         const {firstName , secondName, surname, secondSurName, TypesDocument, documentNumber, email, password, rol, phone} = request.all();
 
+        //check if the user exists
+        const check_user = await User.findBy('email', email)
+        if (check_user) {
+          return response.status(500).json({
+            "state": false,
+            "message": "El usuario ya existe"
+          })
+        }
+
         const user = new User();
         user.first_name = firstName;
         user.second_name = secondName;
@@ -34,6 +43,7 @@ export default class UsersController {
         })
 
       } catch (error) {
+        console.log(error)
         return response.status(500).json({
           "state": false,
           "message": "Fallo en la creación del estudiante"
@@ -153,12 +163,28 @@ export default class UsersController {
         try {
           const id = request.param('id_user')
           const data = request.all()
-          await User.query().where('id', id).update(data)
+
+          const update_data = {}
+          const pass = data.password
+          const salt = bcryptjs.genSaltSync();
+          update_data['password'] = bcryptjs.hashSync( pass, salt );
+
+          update_data['first_name'] = data.firstName
+          update_data['second_name'] = data.secondName
+          update_data['surname'] = data.surname
+          update_data['second_sur_name'] = data.secondSurName
+          update_data['type_document'] = data.TypesDocument
+          update_data['document_number'] = data.documentNumber
+          update_data['email'] = data.email
+          update_data['phone'] = data.phone
+
+          await User.query().where('id', id).update(update_data)
           return response.status(200).json({
             state: true,
             message: "Se actualizo correctamente"
           })
         } catch (error) {
+          console.log(error)
           return response.status(500).json({
             state: false,
             message: "Error al actualizar"

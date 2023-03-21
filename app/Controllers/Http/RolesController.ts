@@ -5,7 +5,6 @@ export default class RolesController {
     public async createRole({request, response}: HttpContextContract){
         try{
             const {name} = request.all();
-            console.log(name)
             const role = new Role();
             role.name = name;
             role.state = true;

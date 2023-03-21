@@ -20,7 +20,7 @@ export default class QuestionsController {
             const answersController = new AnswersController();
             for (let option of options) {
                 console.log(option)
-                answersController.createAnswer(q_id, option.option, option.iscorrect)
+                await answersController.createAnswer(q_id, option.option, option.iscorrect)
             }
 
             return response.status(200).json({
